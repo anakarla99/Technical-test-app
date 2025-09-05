@@ -1,10 +1,12 @@
+from datetime import timedelta
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel import Session, select
-from datetime import timedelta
+
+from app.auth import create_access_token, verify_password, get_password_hash, ACCESS_TOKEN_EXPIRE_MINUTES
 from app.database import get_session
 from app.models import User
-from app.auth import create_access_token, verify_password, get_password_hash, ACCESS_TOKEN_EXPIRE_MINUTES
 from app.schemas import Token, UserCreate, UserRead
 
 router = APIRouter(tags=["auth"])

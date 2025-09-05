@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
+
+from app.auth import get_current_user
 from app.database import get_session
+from app.dependencies import get_todo_by_id
 from app.models import Todo, User
 from app.schemas import TodoCreate, TodoRead, TodoUpdate
-from app.auth import get_current_user
-from app.dependencies import get_todo_by_id
 
 router = APIRouter(tags=["tasks"])
 

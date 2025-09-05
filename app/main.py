@@ -1,7 +1,9 @@
 import logging
+
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
-from contextlib import asynccontextmanager
+
 from app.database import create_db_and_tables
 from app.routers import auth, tasks
 
@@ -16,7 +18,7 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(
-    title="Todo API",
+    title="Technical Test API",
     description="API para gestión de tareas - Prueba Técnica",
     version="1.0.0",
     lifespan=lifespan
@@ -43,7 +45,7 @@ app.include_router(tasks.router, prefix="/tasks", tags=["tasks"])
 
 @app.get("/")
 async def root():
-    return {"message": "Bienvenido a la Todo API"}
+    return {"message": "Bienvenido a la Technical Test API"}
 
 @app.get("/health")
 async def health_check():

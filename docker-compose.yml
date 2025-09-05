@@ -11,7 +11,6 @@ services:
       - "8000:8000"
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/technicaltestapp
-      - SECRET_KEY=tu-clave-super-segura-aqui-cambia-esto-en-produccion
       - ALGORITHM=HS256
       - ACCESS_TOKEN_EXPIRE_MINUTES=30
     depends_on:
@@ -21,14 +20,14 @@ services:
     image: postgres:13
     environment:
       POSTGRES_DB: technicaltestapp
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pasword1234
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d todoapp"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d technicaltestapp"]
       interval: 5s
       timeout: 5s
       retries: 5

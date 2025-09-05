@@ -1,6 +1,7 @@
+from datetime import datetime
+
 from pydantic import BaseModel, validator
 from typing import Optional
-from datetime import datetime
 
 class Token(BaseModel):
     access_token: str
