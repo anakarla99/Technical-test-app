@@ -37,7 +37,7 @@ API REST desarrollada en Python con FastAPI y PostgreSQL para la gestión de tar
 
 1. **Clonar el repositorio**:
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/anakarla99/Technical-test-app.git
 cd technical-test-app
 ```
 
