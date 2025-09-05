@@ -1,8 +1,13 @@
-from fastapi import FastAPI, Depends
+import logging
+from fastapi import FastAPI, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.database import create_db_and_tables
 from app.routers import auth, tasks
+
+# Configuración de logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -26,8 +31,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router)
-app.include_router(tasks.router)
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logger.info(f"Request: {request.method} {request.url}")
+    response = await call_next(request)
+    logger.info(f"Response: {response.status_code}")
+    return response
+
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
+app.include_router(tasks.router, prefix="/tasks", tags=["tasks"])
 
 @app.get("/")
 async def root():

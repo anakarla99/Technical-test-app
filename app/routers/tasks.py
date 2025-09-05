@@ -8,7 +8,7 @@ from app.dependencies import get_todo_by_id
 
 router = APIRouter(tags=["tasks"])
 
-@router.post("/tasks", response_model=TodoRead)
+@router.post("/", response_model=TodoRead)
 async def create_task(
     todo_create: TodoCreate,
     session: Session = Depends(get_session),

@@ -2,13 +2,15 @@
 services:
   web:
     build: .
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    command: >
+      sh -c "sleep 5 &&
+      uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/todoapp
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/technicaltestapp
       - SECRET_KEY=tu-clave-super-segura-aqui-cambia-esto-en-produccion
       - ALGORITHM=HS256
       - ACCESS_TOKEN_EXPIRE_MINUTES=30
@@ -24,7 +26,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d todoapp"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
 
 volumes:
   postgres_data:
